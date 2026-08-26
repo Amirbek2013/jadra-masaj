@@ -273,3 +273,21 @@ document.getElementById('siteYear').textContent = new Date().getFullYear();
     });
   }
 })();
+
+// Responsive navigation safety: close the mobile menu when switching to a wider layout.
+(() => {
+  const navEl = document.querySelector('.main-nav');
+  const btnEl = document.querySelector('.menu-btn');
+  let lastWide = window.innerWidth > 1180;
+  const syncResponsiveNav = () => {
+    const wide = window.innerWidth > 1180;
+    if (wide !== lastWide || wide) {
+      navEl?.classList.remove('is-open');
+      btnEl?.classList.remove('is-open');
+      btnEl?.setAttribute('aria-expanded','false');
+    }
+    lastWide = wide;
+  };
+  window.addEventListener('resize', syncResponsiveNav, {passive:true});
+  window.addEventListener('orientationchange', syncResponsiveNav, {passive:true});
+})();
